@@ -35,6 +35,14 @@
 				</p:inputText>
 			</ui:decorate>
 			
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="description" />
+				<ui:param name="label" value="#{msgsCore['manageContents.form.description']}" />
+				<p:inputText id="description" value="#{manageContentsController.selectedEntity.description}" required="true" pt:placeholder="#{msgsCore['manageContents.form.description.placeholder']}" disabled="#{manageContentsController.readOnly}">
+					<p:ajax event="blur" update="descriptionField" />
+				</p:inputText>
+			</ui:decorate>
+			
 			<h:panelGroup rendered="#{! manageContentsController.readOnly}">
 				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
 					<p:commandButton id="cancelButton" action="#{manageContentsController.list}" value="#{msgs['jbutler.crud.button.cancel']}" immediate="true" icon="fa fa-fw fa-close" />

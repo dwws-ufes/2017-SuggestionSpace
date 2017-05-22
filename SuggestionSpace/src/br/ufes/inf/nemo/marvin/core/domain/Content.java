@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 @Entity
-public class Content extends PersistentObjectSupport {
+public class Content extends PersistentObjectSupport implements Comparable<Content>{
 
 	/**
 	 * 
@@ -62,5 +62,16 @@ public class Content extends PersistentObjectSupport {
 	}
 	public void setIdentifier(int identifier) {
 		this.identifier = identifier;
+	}
+	@Override
+	public int compareTo(Content o) {
+		
+		if (name == null) return 1;
+		if (o.name == null) return -1;
+		int cmp = name.compareTo(o.name);
+		if (cmp != 0) return cmp;
+
+		// If it's the same name, check if it's the same entity.
+		return uuid.compareTo(o.uuid);
 	}
 }

@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
 @Entity
-public class Type extends PersistentObjectSupport {
+public class Type extends PersistentObjectSupport implements Comparable<Type>{
 
 	/**
 	 * 
@@ -34,5 +34,16 @@ public class Type extends PersistentObjectSupport {
 	}
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	public int compareTo(Type o) {
+		if (name == null) return 1;
+		if (o.name == null) return -1;
+		int cmp = name.compareTo(o.name);
+		if (cmp != 0) return cmp;
+
+		// If it's the same name, check if it's the same entity.
+		return uuid.compareTo(o.uuid);
+	}
 
 }
