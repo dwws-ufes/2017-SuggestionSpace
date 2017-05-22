@@ -63,6 +63,10 @@
 				<p:column headerText="#{msgsCore['manageUsers.form.email']}">
 					<h:outputText value="#{entity.email}" />
 				</p:column>
+				
+				<p:column headerText="#{msgsCore['manage${Entities}.form.lastLoginDate']}">
+					<h:outputText value="#{entity.lastLoginDate}" />
+				</p:column>
 
 				<p:ajax event="rowSelect" update=":listingForm:buttonsGroup" />
 				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />

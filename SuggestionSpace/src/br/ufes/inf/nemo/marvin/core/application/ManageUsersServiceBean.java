@@ -27,11 +27,8 @@ public class ManageUsersServiceBean extends CrudServiceBean<User> implements Man
 	}
 	@Override
 	protected User validate(User newEntity, User oldEntity) {
-		// New academics must have their creation date set.
 		Date now = new Date(System.currentTimeMillis());
 		if (oldEntity == null) newEntity.setCreationDate(now);
-
-		// All academics have their last update date set when persisted.
 		newEntity.setLastUpdateDate(now);
 
 		return newEntity;
