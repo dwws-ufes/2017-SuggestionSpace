@@ -27,7 +27,7 @@
 
 			<!-- Logo -->
 			<a href="#{facesContext.externalContext.requestContextPath}/" class="logo"><span class="logo-mini">[<b>M</b>]</span>
-				<h:panelGroup rendered="#{coreInfo.systemInstalled}"><span class="logo-lg"><b>Suggestion Space</b> @ <h:outputText value="#{coreInfo.currentConfig.institutionAcronym}" /></span></h:panelGroup>
+				<h:panelGroup rendered="#{coreInfo.systemInstalled}"><span class="logo-lg"><b>Suggestion Space</b></span></h:panelGroup>
 				<h:panelGroup rendered="#{not coreInfo.systemInstalled}"><span class="logo-lg"><b>Suggestion Space</b></span></h:panelGroup>
 			</a>
 
@@ -230,6 +230,8 @@
 					<li class="header"><h:outputText value="#{msgs['title.menu']}" /></li>
 					<li><h:commandLink action="#{installSystemController.begin}" rendered="#{not coreInfo.systemInstalled}"><i class="fa fa-cogs"></i> <span><h:outputText value="#{msgsCore['core.menu.installSystem']}" /></span></h:commandLink></li>
 					<li><h:link outcome="/core/login/index" rendered="#{coreInfo.systemInstalled and not sessionController.loggedIn}"><i class="fa fa-key"></i> <span><h:outputText value="#{msgsCore['core.menu.login']}" /></span></h:link></li>
+					<li><h:link outcome="/core/manageContents/list" rendered="#{coreInfo.systemInstalled}"><i class="fa fa-hand-paper-o"></i> <span><h:outputText value="#{msgsCore['core.menu.contents']}" /></span></h:link></li>
+					<li><h:link outcome="/core/manageFavorites/list" rendered="#{coreInfo.systemInstalled and sessionController.loggedIn}"><i class="fa fa-hand-paper-o"></i> <span><h:outputText value="#{msgsCore['core.menu.favorites']}" /></span></h:link></li>					
 				</ul>
 				</h:form>
 				<!-- /.sidebar-menu -->
