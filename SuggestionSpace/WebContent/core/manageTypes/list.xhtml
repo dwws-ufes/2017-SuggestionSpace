@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="/resources/#{coreInfo.decorator}/decorator.xhtml">
+
+	<ui:define name="title"><h:outputText value="#{msgsCore['manageTypes.title']}" /></ui:define>
+    
+    <ui:define name="description"><h:outputText value="#{msgsCore['manageTypes.title.description']}" /></ui:define>
+
+	<ui:define name="body">
+		<!-- Filter bar: used to filter the listing (displayed when there is at least one filter available). -->
+		<h:panelGroup id="filterBar" rendered="#{(not empty manageTypesController.filters)}">
+			<ui:decorate template="/resources/#{coreInfo.decorator}/form-nobox.xhtml">
+				<ui:param name="formName" value="filterForm" />
+
+				<ui:decorate template="/resources/#{coreInfo.decorator}/formfield-filter.xhtml">
+					<p:selectOneMenu id="filter" required="true" value="#{manageTypesController.filterKey}">
+						<f:selectItems value="#{manageTypesController.filters}" var="filter" itemLabel="#{filter.label}" itemValue="#{filter.key}" />
+						<f:ajax event="change" execute="@form" listener="#{manageTypesController.changeFilter}" render="@form :listingForm" />
+					</p:selectOneMenu>
+					<p:inputText id="filterText" required="false" value="#{manageTypesController.filterParam}" rendered="#{manageTypesController.filter.options == null}" />
+					<p:selectOneMenu id="filterSelect" required="false" value="#{manageTypesController.filterParam}" rendered="#{manageTypesController.filter.options != null}">
+						<f:selectItems value="#{manageTypesController.filter.reversedOptionsLabels}" />
+					</p:selectOneMenu>
+					<p:commandButton action="#{manageTypesController.filter}" value="#{msgs['jbutler.crud.button.filter']}" process="@form" update=":listingForm @form" icon="fa fa-fw fa-search" />
+					<p:commandButton action="#{manageTypesController.cancelFilter}" value="#{msgs['jbutler.crud.button.cancelFilter']}" process="@form" update=":listingForm @form" icon="fa fa-fw fa-close" rendered="#{manageTypesController.filtering}" />
+					<p:commandButton action="#{manageTypesController.clearFilter}" value="#{msgs['jbutler.crud.button.clearFilter']}" process="@form" update=":listingForm @form" icon="fa fa-fw fa-eraser" rendered="#{not manageTypesController.filtering}" />
+				</ui:decorate>
+				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.filterFocus']}" handler="if (findObjectById('filterForm:filterText') != null) findObjectById('filterForm:filterText').focus(); else findObjectById('filterForm:filterSelect').focus();" />
+				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.clearFilter']}" action="#{manageTypesController.cancelFilter}" process="@form" update=":listingForm @form" rendered="#{manageTypesController.filtering}" />
+				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.clearFilter']}" action="#{manageTypesController.clearFilter}" process="@form" update=":listingForm @form" rendered="#{not manageTypesController.filtering}" />
+			</ui:decorate>
+		</h:panelGroup>
+		
+		<!-- The listing form. -->
+		<ui:decorate template="/resources/#{coreInfo.decorator}/form-nobox.xhtml">
+			<ui:param name="formName" value="listingForm" />
+
+			<p:dataTable
+				widgetVar="listingTable"
+				value="#{manageTypesController.lazyEntities}" 
+				var="entity" 
+				rows="#{manageTypesController.maxDataTableRowsPerPage}" 
+				rowsPerPageTemplate="#{manageTypesController.halfMaxDataTableRowsPerPage},#{manageTypesController.maxDataTableRowsPerPage},#{manageTypesController.doubleMaxDataTableRowsPerPage}"
+				lazy="true" 
+				paginator="true" 
+				selection="#{manageTypesController.selectedEntity}" 
+				selectionMode="single" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+				paginatorPosition="bottom" 
+				loadingMessage="#{msgs['jbutler.text.ajax.loading']}" 
+				emptyMessage="#{manageTypesController.filtering ? msgsCore['manageTypes.text.noEntitiesFiltered'] : msgsCore['manageTypes.text.noEntities']}">
+
+				<p:column headerText="#{msgsCore['manageTypes.form.name']}">
+					<h:outputText value="#{entity.name}" />
+				</p:column>
+
+				<p:column headerText="#{msgsCore['manageTypes.form.name']}">
+					<h:outputText value="#{entity.name}" />
+				</p:column>
+
+				<p:ajax event="rowSelect" update=":listingForm:buttonsGroup" />
+				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />
+			</p:dataTable>
+			<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
+			<p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
+			<p:hotkey bind="right" handler="goToNextPage(listingTable);" />
+			<p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
+
+			<!-- Buttons shown below the listing. -->
+			<h:panelGroup id="buttonsGroup">
+				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-04.xhtml">
+					<p:commandButton action="#{manageTypesController.create}" value="#{msgs['jbutler.crud.button.create']}" icon="fa fa-fw fa-user-plus" />
+					<p:commandButton action="#{manageTypesController.retrieve}" value="#{msgs['jbutler.crud.button.retrieve']}" icon="fa fa-fw fa-file-text" disabled="#{manageTypesController.selectedEntity == null}" />
+					<p:commandButton action="#{manageTypesController.update}" value="#{msgs['jbutler.crud.button.update']}" icon="fa fa-fw fa-refresh" disabled="#{manageTypesController.selectedEntity == null}" />
+					<p:commandButton action="#{manageTypesController.trash}" value="#{msgs['jbutler.crud.button.delete']}" icon="fa fa-fw fa-trash-o" disabled="#{manageTypesController.selectedEntity == null}" process="@this" update=":listingForm:trashGroup" />
+				</ui:decorate>
+				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.create']}" action="#{manageTypesController.create}" />
+				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.retrieve']}" action="#{manageTypesController.retrieve}" rendered="#{manageTypesController.selectedEntity != null}" />
+				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.update']}" action="#{manageTypesController.update}" rendered="#{manageTypesController.selectedEntity != null}" />
+				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.delete']}" action="#{manageTypesController.trash}" rendered="#{manageAcademicsController.selectedEntity != null}" process="@this" update=":listingForm:trashGroup" />
+			</h:panelGroup>
+
+			<!-- The trash panel: shows entities that have been selected for deletion. -->
+			<h:panelGroup id="trashGroup">
+				<h:panelGroup rendered="#{not empty manageTypesController.trashCan}">
+					<ui:decorate template="/resources/#{coreInfo.decorator}/form-danger.xhtml">
+						<ui:param name="formName" value="trashForm" />
+						<ui:param name="formLabel" value="#{msgs['jbutler.crud.text.trashHeader']}" />
+						<p:dataList value="#{manageTypesController.trashCan}" var="entity" type="ordered">
+			            	#{entity.name} 
+			            </p:dataList>
+						<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
+							<p:commandButton action="#{manageTypesController.cancelDeletion}" value="#{msgs['jbutler.crud.button.cancelDeletion']}" icon="fa fa-fw fa-close" process="@this" update=":listingForm" />
+							<p:commandButton action="#{manageTypesController.delete}" value="#{msgs['jbutler.crud.button.confirmDeletion']}" icon="fa fa-fw fa-trash-o" ajax="false" />
+						</ui:decorate>
+						<p:hotkey bind="#{msgs['jbutler.crud.hotkey.cancelDeletion']}" action="#{manageTypesController.cancelDeletion}" process="@this" update=":listingForm" />
+						<p:hotkey bind="#{msgs['jbutler.crud.hotkey.confirmDeletion']}" action="#{manageTypesController.delete}" ajax="false" />
+					</ui:decorate>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:decorate>
+	</ui:define>
+</ui:composition>
