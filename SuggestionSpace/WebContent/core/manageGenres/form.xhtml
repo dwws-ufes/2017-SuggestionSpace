@@ -37,7 +37,7 @@
 
 			<h:panelGroup rendered="#{! manageGenresController.readOnly}">
 				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
-					<p:commandButton id="cancelButton" action="#{manageGenresController.list}" value="#{msgs['jbutler.crud.button.cancel']}" immediate="true" icon="fa fa-fw fa-close" />
+					<p:commandButton id="cancelButton" onclick="history.go(-1)" value="#{msgs['jbutler.crud.button.cancel']}" immediate="true" icon="fa fa-fw fa-close" />
 					<p:commandButton id="saveButton" action="#{manageGenresController.save}" value="#{msgs['jbutler.crud.button.save']}" update=":form :globalMessages" icon="fa fa-fw fa-save" />
 					<p:defaultCommand target="saveButton" />
 					<p:hotkey bind="#{msgs['jbutler.crud.hotkey.backToList']}" action="#{manageGenresController.list}" immediate="true" />

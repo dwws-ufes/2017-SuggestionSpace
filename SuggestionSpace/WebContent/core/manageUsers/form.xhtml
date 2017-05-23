@@ -112,7 +112,7 @@
 				<ui:decorate
 					template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
 					<p:commandButton id="cancelButton"
-						action="#{manageUsersController.list}"
+						onclick="history.go(-1)"			
 						value="#{msgs['jbutler.crud.button.cancel']}" immediate="true"
 						icon="fa fa-fw fa-close" />
 					<p:commandButton id="saveButton"

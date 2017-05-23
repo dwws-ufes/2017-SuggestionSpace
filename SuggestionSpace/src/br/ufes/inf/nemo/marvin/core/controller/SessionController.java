@@ -3,6 +3,7 @@ package br.ufes.inf.nemo.marvin.core.controller;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -45,6 +46,7 @@ public class SessionController extends JSFController {
 
 	/** Input: password for authentication. */
 	private String password;
+	
 
 	/** Getter for email. */
 	public String getEmail() {
@@ -92,7 +94,7 @@ public class SessionController extends JSFController {
 	public Date getNow() {
 		return new Date(System.currentTimeMillis());
 	}
-
+	int rand_image_id;
 	/**
 	 * Provides the expiration date/time for the user session. This makes it possible to warn the user when his session
 	 * will expire.
@@ -150,4 +152,10 @@ public class SessionController extends JSFController {
 		// If everything is OK, redirect back to the home screen.
 		return "/index.xhtml?faces-redirect=true";
 	}
+
+	public int getRand_img_id() {
+		Random rand_id = new Random();
+		return rand_id.nextInt(4);
+	}
+
 }
