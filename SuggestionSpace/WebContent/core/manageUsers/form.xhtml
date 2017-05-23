@@ -47,7 +47,7 @@
 					required="true"
 					pt:placeholder="#{msgsCore['manageUsers.form.name.placeholder']}"
 					disabled="#{manageUsersController.readOnly}">
-					<p:ajax event="blur" update="nameField" />
+					<p:ajax event="blur" update="nameField shortNameField" listener="#{manageUsersController.suggestShortName}" />
 				</p:inputText>
 			</ui:decorate>
 			
@@ -93,7 +93,21 @@
 				</p:inputMask>
 				<h:outputText value=" (#{msgs['jbutler.format.date.label']})" />
 			</ui:decorate>
-
+			
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+					<ui:param name="fieldName" value="password" />
+					<ui:param name="label" value="#{msgsCore['manageUsers.form.password']}" />
+					<p:password id="password" minLength="6" value="#{manageUsersController.selectedEntity.password}" required="true" feedback="true" promptLabel="#{msgs['primefaces.password.prompt']}" weakLabel="#{msgs['primefaces.password.weak']}" goodLabel="#{msgs['primefaces.password.good']}" strongLabel="#{msgs['primefaces.password.strong']}" />
+				</ui:decorate>
+				
+				<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+					<ui:param name="fieldName" value="repeatPassword" />
+					<ui:param name="label" value="#{msgsCore['manageUsers.form.repeatPassword']}" />
+					<p:password id="repeatPassword" value="#{manageUsersController.repeatPassword}" required="true" feedback="false">
+						<f:ajax event="blur" render=":globalMessages" listener="#{manageUsersController.ajaxCheckPasswords}" execute="password repeatPassword" />
+					</p:password>
+				</ui:decorate>
+			
 			<h:panelGroup rendered="#{! manageUsersController.readOnly}">
 				<ui:decorate
 					template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
