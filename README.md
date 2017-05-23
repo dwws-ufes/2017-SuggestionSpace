@@ -1,6 +1,5 @@
 # 2017-SuggestionSpace
-Assignment for the 2017 edition of the "Web Development and the Semantic Web" course, by Georgeana Monteiro de Oliveira Dias and Jordao Rodrigues Oliveira Rosario
-
+Assignment for the 2017 edition of the "Web Development and the Semantic Web" course.
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
@@ -13,3 +12,6 @@ The prerequisites and tutorial for installation all the environment to run the p
 
 With the  SuggestionSpace folder uncompressed somewhere inside your computer go to eclipse and access  file-> Open Projects to File System... and select the directory SuggestionSpace folder as import source
 
+## Authors
+
+* **Jordão Rodriguês Oliveira Rosario**
