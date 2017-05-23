@@ -74,7 +74,7 @@ public class ManageUsersController extends CrudController<User> {
 	
 	@Override
 	protected void initFilters() {
-		addFilter(new LikeFilter("manageUsers.filter.byName", "name", getI18nMessage("msgsCore", "manageUsers.text.filter.byName")));		
+		addFilter(new LikeFilter("manageUsers.filter.byName", "name", getI18nMessage("msgsCore", "manageUsers.text.filter.byName")));
 	}
 	
 	@Override
