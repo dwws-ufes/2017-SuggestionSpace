@@ -67,6 +67,30 @@
 				<p:ajax event="rowSelect" update=":listingForm:buttonsGroup" />
 				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />
 			</p:dataTable>
+			
+			<p:carousel value="#{manageContentsController.entities}"
+				headerText="Responsive" var="content" itemStyle="text-align:center"
+				responsive="true">
+				<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
+					columnClasses="label,value" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<h:outputText value="Id:" />
+					<h:outputText value="#{content.id}" />
+
+					<h:outputText value="Name" />
+					<h:outputText value="#{content.name}" />
+
+					<h:outputText value="Description" />
+					<h:outputText value="#{content.description}" />
+
+				</p:panelGrid>
+				
+				<f:facet name="footer">
+                	In total there are #{manageContentsController.entities.size()} Content(s).
+        		</f:facet>
+        		
+			</p:carousel>
+			
 			<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
 			<p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
 			<p:hotkey bind="right" handler="goToNextPage(listingTable);" />

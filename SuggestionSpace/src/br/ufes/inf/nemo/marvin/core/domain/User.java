@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,7 +62,7 @@ public class User extends Person {
 	private Date lastLoginDate;
 	
 	/** Favorites content of the user */
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Content> favorites;
 	
 	/** Getter for shortName. */

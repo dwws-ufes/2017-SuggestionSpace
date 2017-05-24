@@ -2,6 +2,7 @@ package br.ufes.inf.nemo.marvin.core.domain;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,10 +28,10 @@ public class Content extends PersistentObjectSupport implements Comparable<Conte
 	
 	private int identifier;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Type type;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Genre genre;
 	
 	public Genre getGenre() {

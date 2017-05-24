@@ -3,6 +3,7 @@ package br.ufes.inf.nemo.marvin.core.domain;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
@@ -23,7 +24,7 @@ public class Genre extends PersistentObjectSupport implements Comparable<Genre>{
 	public void setContents(List<Content> contents) {
 		this.contents = contents;
 	}
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Content> contents;
 	
 	public String getName() {
