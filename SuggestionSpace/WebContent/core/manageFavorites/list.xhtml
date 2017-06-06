@@ -43,7 +43,7 @@
 
 			<p:dataTable
 				widgetVar="listingTable"
-				value="#{manageContentsController.lazyEntities}" 
+				value="#{sessionController.getCurrentUser().favorites}"
 				var="entity" 
 				rows="#{manageContentsController.maxDataTableRowsPerPage}" 
 				rowsPerPageTemplate="#{manageContentsController.halfMaxDataTableRowsPerPage},#{manageContentsController.maxDataTableRowsPerPage},#{manageContentsController.doubleMaxDataTableRowsPerPage}"

@@ -6,14 +6,14 @@
 /* Input fields manipulation. */
 .ui-inputfield {
     width: 100%;
-    padding: 6px 12px;
+    padding: 6px 6px;
 }
 .ui-selectonemenu {
 	width: 100%;	
 }
 .ui-selectonemenu .ui-selectonemenu-trigger {
 	width: 28px;
-	padding-top: 5px;
+	padding-top: 6px;
 }
 .ui-datatable {
 	margin-bottom: 5px;
@@ -25,10 +25,10 @@ form#filterForm .ui-selectonemenu-label {
 	text-align: right;
 }
 form#filterForm .ui-panelgrid-cell {
-	padding: 4px 3px;
+	padding: 6px 12px;
 }
 form#filterForm .ui-button {
-	padding: 6px 6px;
+	padding: 3px 4px;
 }
 
 /* Password fields should occupy 50% instead. */
@@ -38,8 +38,8 @@ form#filterForm .ui-button {
 
 /* Responsive buttons using bootstrap styles. */
 .ui-grid .ui-button {
-	width: 100%;
-	padding: 6px 12px;
+	width: 90%;
+	padding: 6px 6px;
 	font-size: 14px;
 	vertical-align: middle;
 }
