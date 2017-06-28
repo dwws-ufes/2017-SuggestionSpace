@@ -41,69 +41,29 @@
 		<ui:decorate template="/resources/#{coreInfo.decorator}/form-nobox.xhtml">
 			<ui:param name="formName" value="listingForm" />
 
-			<p:dataTable
-				widgetVar="listingTable"
-				value="#{sessionController.getCurrentUser().favorites}"
-				var="entity" 
-				rows="#{manageContentsController.maxDataTableRowsPerPage}" 
-				rowsPerPageTemplate="#{manageContentsController.halfMaxDataTableRowsPerPage},#{manageContentsController.maxDataTableRowsPerPage},#{manageContentsController.doubleMaxDataTableRowsPerPage}"
-				lazy="true" 
-				paginator="true" 
-				selection="#{manageContentsController.selectedEntity}" 
-				selectionMode="single" 
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
-				paginatorPosition="bottom" 
-				loadingMessage="#{msgs['jbutler.text.ajax.loading']}" 
-				emptyMessage="#{manageContentsController.filtering ? msgsCore['manageContents.text.noEntitiesFiltered'] : msgsCore['manageContents.text.noEntities']}">
+			<p:carousel value="#{sessionController.getCurrentUser().favorites}"
+				headerText="Responsive" var="content" itemStyle="text-align:center"
+				responsive="true">
+				<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
+					columnClasses="label,value" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<h:outputText value="Id:" />
+					<h:outputText value="#{content.id}" />
 
-				<p:column headerText="#{msgsCore['manageContents.form.name']}">
-					<h:outputText value="#{entity.name}" />
-				</p:column>
+					<h:outputText value="Name" />
+					<h:outputText value="#{content.name}" />
 
-				<p:column headerText="#{msgsCore['manageContents.form.identifier']}">
-					<h:outputText value="#{entity.identifier}" />
-				</p:column>
+					<h:outputText value="Description" />
+					<h:outputText value="#{content.description}" />
 
-				<p:ajax event="rowSelect" update=":listingForm:buttonsGroup" />
-				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />
-			</p:dataTable>
-			<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
-			<p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
-			<p:hotkey bind="right" handler="goToNextPage(listingTable);" />
-			<p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
-
-			<!-- Buttons shown below the listing. -->
-			<h:panelGroup id="buttonsGroup">
-				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-04.xhtml">
-					<p:commandButton action="#{manageContentsController.create}" value="#{msgs['jbutler.crud.button.create']}" icon="fa fa-fw fa-user-plus" />
-					<p:commandButton action="#{manageContentsController.retrieve}" value="#{msgs['jbutler.crud.button.retrieve']}" icon="fa fa-fw fa-file-text" disabled="#{manageContentsController.selectedEntity == null}" />
-					<p:commandButton action="#{manageContentsController.update}" value="#{msgs['jbutler.crud.button.update']}" icon="fa fa-fw fa-refresh" disabled="#{manageContentsController.selectedEntity == null}" />
-					<p:commandButton action="#{manageContentsController.trash}" value="#{msgs['jbutler.crud.button.delete']}" icon="fa fa-fw fa-trash-o" disabled="#{manageContentsController.selectedEntity == null}" process="@this" update=":listingForm:trashGroup" />
-				</ui:decorate>
-				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.create']}" action="#{manageContentsController.create}" />
-				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.retrieve']}" action="#{manageContentsController.retrieve}" rendered="#{manageContentsController.selectedEntity != null}" />
-				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.update']}" action="#{manageContentsController.update}" rendered="#{manageContentsController.selectedEntity != null}" />
-				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.delete']}" action="#{manageContentsController.trash}" rendered="#{manageAcademicsController.selectedEntity != null}" process="@this" update=":listingForm:trashGroup" />
-			</h:panelGroup>
-
-			<!-- The trash panel: shows entities that have been selected for deletion. -->
-			<h:panelGroup id="trashGroup">
-				<h:panelGroup rendered="#{not empty manageContentsController.trashCan}">
-					<ui:decorate template="/resources/#{coreInfo.decorator}/form-danger.xhtml">
-						<ui:param name="formName" value="trashForm" />
-						<ui:param name="formLabel" value="#{msgs['jbutler.crud.text.trashHeader']}" />
-						<p:dataList value="#{manageContentsController.trashCan}" var="entity" type="ordered">
-			            	#{entity.name} 
-			            </p:dataList>
-						<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
-							<p:commandButton action="#{manageContentsController.cancelDeletion}" value="#{msgs['jbutler.crud.button.cancelDeletion']}" icon="fa fa-fw fa-close" process="@this" update=":listingForm" />
-							<p:commandButton action="#{manageContentsController.delete}" value="#{msgs['jbutler.crud.button.confirmDeletion']}" icon="fa fa-fw fa-trash-o" ajax="false" />
-						</ui:decorate>
-						<p:hotkey bind="#{msgs['jbutler.crud.hotkey.cancelDeletion']}" action="#{manageContentsController.cancelDeletion}" process="@this" update=":listingForm" />
-						<p:hotkey bind="#{msgs['jbutler.crud.hotkey.confirmDeletion']}" action="#{manageContentsController.delete}" ajax="false" />
-					</ui:decorate>
-				</h:panelGroup>
-			</h:panelGroup>
+				</p:panelGrid>
+				
+				<f:facet name="footer">
+                	In total there are #{sessionController.getCurrentUser().favorites.size()} Content(s).
+        		</f:facet>
+        		
+			</p:carousel>
+			
 		</ui:decorate>
 	</ui:define>
 </ui:composition>

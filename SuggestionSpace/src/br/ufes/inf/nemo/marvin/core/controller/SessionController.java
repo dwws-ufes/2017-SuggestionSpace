@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import br.ufes.inf.nemo.jbutler.ejb.controller.JSFController;
 import br.ufes.inf.nemo.marvin.core.application.CoreInformation;
 import br.ufes.inf.nemo.marvin.core.application.SessionInformation;
+import br.ufes.inf.nemo.marvin.core.domain.Content;
 import br.ufes.inf.nemo.marvin.core.domain.User;
 import br.ufes.inf.nemo.marvin.core.exceptions.LoginFailedException;
 
@@ -156,6 +157,12 @@ public class SessionController extends JSFController {
 	public int getRand_img_id() {
 		Random rand_id = new Random();
 		return rand_id.nextInt(4);
+	}
+	
+	public String setFav(Content cnt){
+		System.out.println(cnt.getName());
+		sessionInformation.setFav(cnt);
+		return null;
 	}
 
 }

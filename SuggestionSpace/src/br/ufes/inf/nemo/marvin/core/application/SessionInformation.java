@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.ejb.Local;
 
+import br.ufes.inf.nemo.marvin.core.domain.Content;
 import br.ufes.inf.nemo.marvin.core.domain.User;
 import br.ufes.inf.nemo.marvin.core.exceptions.LoginFailedException;
 
@@ -36,4 +37,5 @@ public interface SessionInformation extends Serializable {
 	 *             If the username is unknown or the password is incorrect.
 	 */
 	void login(String username, String password) throws LoginFailedException;
+	String setFav(Content cnt);
 }

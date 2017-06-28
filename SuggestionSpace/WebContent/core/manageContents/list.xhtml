@@ -102,11 +102,13 @@
 					<p:commandButton action="#{manageContentsController.create}" value="#{msgs['jbutler.crud.button.create']}" icon="fa fa-fw fa-user-plus" />
 					<p:commandButton action="#{manageContentsController.retrieve}" value="#{msgs['jbutler.crud.button.retrieve']}" icon="fa fa-fw fa-file-text" disabled="#{manageContentsController.selectedEntity == null}" />
 					<p:commandButton action="#{manageContentsController.update}" value="#{msgs['jbutler.crud.button.update']}" icon="fa fa-fw fa-refresh" disabled="#{manageContentsController.selectedEntity == null}" />
+					<p:commandButton action="#{sessionController.setFav(manageContentsController.selectedEntity)}" value="Favorite" icon="fa fa-fw fa-refresh" disabled="#{manageContentsController.selectedEntity == null or not sessionController.loggedIn}" />
 					<p:commandButton action="#{manageContentsController.trash}" value="#{msgs['jbutler.crud.button.delete']}" icon="fa fa-fw fa-trash-o" disabled="#{manageContentsController.selectedEntity == null}" process="@this" update=":listingForm:trashGroup" />
 				</ui:decorate>
 				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.create']}" action="#{manageContentsController.create}" />
 				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.retrieve']}" action="#{manageContentsController.retrieve}" rendered="#{manageContentsController.selectedEntity != null}" />
 				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.update']}" action="#{manageContentsController.update}" rendered="#{manageContentsController.selectedEntity != null}" />
+				<p:hotkey bind="Favorite" action="#{sessionController.setFav(manageContentsController.selectedEntity)}" rendered="#{manageContentsController.selectedEntity != null and sessionController.loggedIn}" />
 				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.delete']}" action="#{manageContentsController.trash}" rendered="#{manageAcademicsController.selectedEntity != null}" process="@this" update=":listingForm:trashGroup" />
 			</h:panelGroup>
 

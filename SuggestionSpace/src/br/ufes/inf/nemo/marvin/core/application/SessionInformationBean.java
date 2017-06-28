@@ -13,6 +13,7 @@ import javax.enterprise.context.SessionScoped;
 import br.ufes.inf.nemo.jbutler.TextUtils;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.MultiplePersistentObjectsFoundException;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.PersistentObjectNotFoundException;
+import br.ufes.inf.nemo.marvin.core.domain.Content;
 import br.ufes.inf.nemo.marvin.core.domain.User;
 import br.ufes.inf.nemo.marvin.core.exceptions.LoginFailedException;
 import br.ufes.inf.nemo.marvin.core.persistence.UserDAO;
@@ -43,6 +44,8 @@ public class SessionInformationBean implements SessionInformation {
 	/** @see br.org.feees.sigme.core.application.SessionInformation#getCurrentUser() */
 	@Override
 	public User getCurrentUser() {
+		if(currentUser!=null)
+		currentUser = userDAO.retrieveById(currentUser.getId());
 		return currentUser;
 	}
 
@@ -99,5 +102,12 @@ public class SessionInformationBean implements SessionInformation {
 			logger.log(Level.SEVERE, "Logging in user \"" + username + "\" triggered an exception during MD5 hash generation.", e);
 			throw new LoginFailedException(LoginFailedException.LoginFailedReason.MD5_ERROR);
 		}
+	}
+	public String setFav(Content cnt){
+		System.out.println(cnt.getName());
+		currentUser = userDAO.retrieveById(currentUser.getId());
+		currentUser.getFavorites().add(cnt);
+		userDAO.merge(currentUser);
+		return null;
 	}
 }
