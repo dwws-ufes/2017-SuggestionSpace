@@ -78,7 +78,34 @@
 		<ui:decorate
 			template="/resources/#{coreInfo.decorator}/form-nobox.xhtml">
 			<ui:param name="formName" value="listingForm" />
+			
+			<p:dataTable
+				widgetVar="listingTable"
+				value="#{sessionController.getCurrentUser().favorites}" 
+				var="entity" 
+				rows="#{manageContentsController.maxDataTableRowsPerPage}" 
+				rowsPerPageTemplate="#{manageContentsController.halfMaxDataTableRowsPerPage},#{manageContentsController.maxDataTableRowsPerPage},#{manageContentsController.doubleMaxDataTableRowsPerPage}"
+				lazy="true" 
+				paginator="true" 
+				selection="#{manageContentsController.selectedEntity}" 
+				selectionMode="single" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+				paginatorPosition="bottom" 
+				loadingMessage="#{msgs['jbutler.text.ajax.loading']}" 
+				emptyMessage="#{manageContentsController.filtering ? msgsCore['manageContents.text.noEntitiesFiltered'] : msgsCore['manageContents.text.noEntities']}">
 
+				<p:column headerText="#{msgsCore['manageContents.form.name']}">
+					<h:outputText value="#{entity.name}" />
+				</p:column>
+
+				<p:column headerText="#{msgsCore['manageContents.form.identifier']}">
+					<h:outputText value="#{entity.identifier}" />
+				</p:column>
+
+				<p:ajax event="rowSelect" update=":listingForm:buttonsGroup" />
+				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />
+			</p:dataTable>
+			
 			<p:carousel value="#{sessionController.getCurrentUser().favorites}"
 				headerText="Responsive" var="content" itemStyle="text-align:center"
 				responsive="true">
