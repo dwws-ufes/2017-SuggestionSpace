@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/resources/decorator.xhtml">
+
+	<ui:define name="title">#{loginMsgs['login.title']}</ui:define>
+
+	<ui:define name="menu">
+
+		<ui:repeat var="item" value="#{menuController.menuItems}">
+			<li><a href="#{item.url}"><i class="#{item.icon}"></i><span>#{item.title}</span></a></li>
+		</ui:repeat>
+
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="loginForm" styleClass="col-xs-12 col-md-4 col-md-offset-4">
+
+			<h:panelGroup layout="block" styleClass="row">
+
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="email" value="#{loginMsgs['login.email']}" />
+						<h:inputText id="email" value="#{sessionController.email}"
+							size="20" styleClass="form-control" required="true"
+							validatorMessage="#{msgs['form.invalidEmail']}"
+							requiredMessage="#{msgs['form.required']}">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							<f:ajax event="blur" render="emailMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="email"
+							id="emailMessage">
+						</h:message>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="password"
+							value="#{loginMsgs['login.password']}" />
+						<h:inputSecret id="password" value="#{sessionController.password}"
+							size="20" styleClass="form-control" required="true"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="passwordMessage" />
+						</h:inputSecret>
+						<h:message styleClass="error-message" for="password"
+							id="passwordMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:commandButton action="#{sessionController.login}"
+							value="#{loginMsgs['login.login']}" styleClass="btn btn-suggestionspace" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+
+
+			</h:panelGroup>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

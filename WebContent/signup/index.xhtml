@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/resources/decorator.xhtml">
+
+	<ui:define name="title">#{signupMsgs['signup.title']}</ui:define>
+
+	<ui:define name="content">
+					
+		<h:form id="regForm" styleClass="col-xs-12 col-md-8 col-md-offset-2">
+
+			<h:panelGroup layout="block" styleClass="row">
+
+				<h:panelGroup layout="block" styleClass="col-xs-12">
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="name" value="#{dashboardMsgs['user.name']}" />
+						<h:inputText id="name"
+							value="#{registrationController.admin.name}" size="20"
+							styleClass="form-control" required="true"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="nameMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="name" id="nameMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="email" value="#{dashboardMsgs['user.email']}" />
+						<h:inputText id="email"
+							validator="#{emailValidator.validate}"
+							value="#{registrationController.admin.email}" size="20"
+							styleClass="form-control" 
+							binding="#{passwordComponent}"
+							required="true"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="emailMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="email"
+							id="emailMessage">
+						</h:message>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="password" value="#{dashboardMsgs['user.password']}" />
+						<h:inputSecret id="password"
+							value="#{registrationController.admin.password}" size="20"
+							styleClass="form-control" required="true"
+							requiredMessage="#{msgs['form.required']}">
+							<f:validator validatorId="confirmPasswordValidator" />
+							<f:attribute name="confirm"
+								value="#{confirmPassword.submittedValue}" />
+							<f:ajax event="blur" execute="password confirm"
+								render="passwordMessage" />
+						</h:inputSecret>
+						<h:message styleClass="error-message" for="password"
+							id="passwordMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="confirm-password"
+							value="#{dashboardMsgs['user.confirmPassword']}" />
+						<h:inputSecret id="confirm-password"
+							value="#{registrationController.admin.password}" size="20"
+							styleClass="form-control" required="true"
+							requiredMessage="#{msgs['form.required']}"
+							binding="#{confirmPassword}">
+							<f:ajax event="blur" execute="password confirm"
+								render="passwordMessage confirmPasswordMessage" />
+						</h:inputSecret>
+						<h:message styleClass="error-message" for="confirm-password"
+							id="confirmPasswordMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="phone" value="#{dashboardMsgs['user.phone']}" />
+						<h:inputText id="phone"
+							value="#{registrationController.admin.phone}" size="30"
+							required="true" styleClass="form-control field-phone"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="phoneMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="phone"
+							id="phoneMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="birthday" value="#{dashboardMsgs['user.birthday']}" />
+						<h:inputText id="birthday"
+							value="#{registrationController.admin.birthday}" size="10"
+							required="true" styleClass="form-control field-date"
+							requiredMessage="#{msgs['form.required']}"
+							converterMessage="#{msgs['form.invalidDate']}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:ajax event="blur" render="birthdayMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="birthday"
+							id="birthdayMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:commandButton action="#{registrationController.register}"
+							value="#{msgs['form.register']}" styleClass="btn btn-suggestionspace" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+
+		</h:form>
+	</ui:define>
+
+
+
+</ui:composition>

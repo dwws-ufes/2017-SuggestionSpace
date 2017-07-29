@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:components="http://java.sun.com/jsf/composite/components"
+	template="/resources/decorator.xhtml">
+
+	<ui:define name="title">#{dashboardMsgs['user.edit']}</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="regUserForm"
+			styleClass="col-xs-12 col-md-8 col-md-offset-2">
+
+			<h:panelGroup layout="block" styleClass="row">
+
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="name" value="#{dashboardMsgs['user.name']}" />
+						<h:inputText id="name" value="#{userController.selectedUser.name}"
+							size="20" styleClass="form-control" required="true"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="nameMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="name" id="nameMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="email" value="#{dashboardMsgs['user.email']}" />
+						<h:inputText id="email" value="#{userController.selectedUser.email}"
+							size="20" styleClass="form-control"
+							binding="#{passwordComponent}" required="true"
+							validatorMessage="#{msgs['form.invalidEmail']}"
+							requiredMessage="#{msgs['form.required']}">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							<f:ajax event="blur" render="emailMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="email"
+							id="emailMessage">
+						</h:message>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="phone" value="#{dashboardMsgs['user.phone']}" />
+						<h:inputText id="phone" value="#{userController.selectedUser.phone}"
+							size="30" required="true" styleClass="form-control field-phone"
+							requiredMessage="#{msgs['form.required']}">
+							<f:ajax event="blur" render="phoneMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="phone"
+							id="phoneMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 col-md-12">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:outputLabel for="birthday" value="#{dashboardMsgs['user.birthday']}" />
+						<h:inputText id="birthday"
+							value="#{userController.selectedUser.birthday}" size="10"
+							required="true" styleClass="form-control field-date"
+							requiredMessage="#{msgs['form.required']}"
+							converterMessage="#{msgs['form.invalidDate']}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:ajax event="blur" render="birthdayMessage" />
+						</h:inputText>
+						<h:message styleClass="error-message" for="birthday"
+							id="birthdayMessage" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="col-xs-12 text-right">
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:commandButton action="#{userController.update}"
+							value="#{msgs['form.edit']}" styleClass="btn btn-suggestionspace" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+
+		</h:form>
+	</ui:define>
+
+
+
+</ui:composition>

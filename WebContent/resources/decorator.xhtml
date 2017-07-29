@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<f:view locale="#{sessionController.language}" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel='stylesheet'
+		href='#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/css/bootstrap.min.css' />
+	<link rel='stylesheet'
+		href='#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/css/bootstrap-theme.min.css' />
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900"
+		rel="stylesheet" />
+
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/custom.css"
+		rel="stylesheet" type="text/css" />
+	<title><h:outputText value="SuggestionSpace : " /><ui:insert
+			name="title" /></title>
+</h:head>
+<h:body>
+
+	<div class="header">
+		<div class="menu">
+			<h:form>
+				<h:commandButton
+					action="#{sessionController.changeLanguage('pt-BR')}"
+					styleClass="btn-lang pt-br" />
+				<h:commandButton
+					action="#{sessionController.changeLanguage('en-US')}"
+					styleClass="btn-lang en-us" />
+			</h:form>
+			<ul>
+				<h:panelGroup
+					rendered="#{sessionController.hasLoggedUser() == false}">
+					<li><h:button value="#{msgs['menu.main.signup']}"
+							outcome="/signup/index.html" styleClass="btn" /></li>
+					<li><h:button value="#{msgs['menu.main.login']}"
+							outcome="/login/index.html" styleClass="btn btn-suggestionspace" /></li>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{sessionController.hasLoggedUser()}">
+					<li><h:form>
+							<h:commandButton action="#{sessionController.logout}"
+								value="#{msgs['menu.main.logout']}" styleClass="btn btn-suggestionspace" />
+						</h:form></li>
+				</h:panelGroup>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="sidebar col-sm-3 col-md-2">
+				<ul>
+					<h:panelGroup
+						rendered="#{sessionController.currentUser.role == 'admin'}">
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/user/list.faces">
+								<i class="fa fa-user"></i>
+								<span>#{msgs['menu.sidebar.users']}</span>
+							</h:outputLink></li>
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/collection/list.faces">
+								<i class="fa fa-film"></i>
+								<span>#{msgs['menu.sidebar.collections']}</span>
+							</h:outputLink></li>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{sessionController.currentUser.role == 'user'}">
+						<li><h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/collection/list.faces">
+								<i class="fa fa-film"></i>
+								<span>#{msgs['menu.sidebar.collections']}</span>
+							</h:outputLink></li>
+					</h:panelGroup>
+				</ul>
+			</div>
+			<div
+				class="content col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+				<h1 class="page-title">
+					<ui:insert name="title" />
+				</h1>
+				<components:alert type='#{flash.alertType}'
+					message='#{flash.alertMessage}' />
+				<ui:insert name="content" />
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/webjars/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/webjars/jquery-maskedinput/1.4.0/jquery.maskedinput.min.js"></script>
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/resources/js/custom.js"></script>
+
+</h:body>
+</html>

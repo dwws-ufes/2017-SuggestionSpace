@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	<application>
+		<resource-bundle>
+			<base-name>br.ufes.dwws.suggestionSpace.messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>br.ufes.dwws.suggestionSpace.dashboard.messages</base-name>
+			<var>dashboardMsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>br.ufes.dwws.suggestionSpace.login.messages</base-name>
+			<var>loginMsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>br.ufes.dwws.suggestionSpace.signup.messages</base-name>
+			<var>signupMsgs</var>
+		</resource-bundle>
+
+		<locale-config>
+			<default-locale>en-US</default-locale>
+		</locale-config>
+	</application>
+</faces-config>
